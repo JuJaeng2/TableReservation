@@ -25,6 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        System.out.println("JwtAuthenticationFilter 필터 들어옴");
 
         String token = this.resolveTokenFromRequest(request);
 
@@ -33,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
+        System.out.println("JwtAuthenticationFilter 필터 통과");
         filterChain.doFilter(request, response);
     }
 

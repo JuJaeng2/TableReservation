@@ -17,8 +17,6 @@ public class SecurityConfig {
 
     public final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -28,6 +26,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                 {
                     authorizeRequests.requestMatchers("/signUp/**", "/signIn/**").permitAll();
+//                    authorizeRequests.requestMatchers("PARTNER", "/partner/**").permitAll();
+                    authorizeRequests.requestMatchers("/partner/**").hasAuthority("PARTNER");
                     authorizeRequests.anyRequest().authenticated();
                 })
                 .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

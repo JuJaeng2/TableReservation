@@ -8,7 +8,6 @@ import com.mission.tablereservation.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +27,7 @@ public class MemberService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email)  {
         return this.customerRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException( email + " => 존재하지 않는 이메일 입니다.."));
+                .orElseThrow(() -> new CustomException(NOT_EXIST_EMAIL));
     }
 
     public CustomerDto authenticate(String email, String password){

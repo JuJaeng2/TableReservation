@@ -1,6 +1,7 @@
 package com.mission.tablereservation.config;
 
 import com.mission.tablereservation.model.CustomerDto;
+import com.mission.tablereservation.model.CustomerVo;
 import com.mission.tablereservation.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -46,20 +47,14 @@ public class JwtTokenProvider {
 
     public Authentication getAuthentication(String jwt){
         UserDetails userDetails = this.memberService.loadUserByUsername(this.getUserEmail(jwt));
-//        UserDetails userDetails = this.memberService.loadUserByUsername(this.getId(jwt));
         System.out.println("UserDetails => " + userDetails.getUsername());
         System.out.println(userDetails.getAuthorities());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    private String getUserEmail(String token){
+    public String getUserEmail(String token){
         return this.parseClaims(token).getSubject();
-    }
-
-    private Long getId(String token){
-
-        return this.parseClaims(token).get("id", Long.class);
     }
 
     public boolean validateToken(String token) {
@@ -79,4 +74,10 @@ public class JwtTokenProvider {
         }
     }
 
+    public CustomerVo getCustomerVO(String token) {
+        Claims claims = this.parseClaims(token);
+        System.out.println(claims.getId());
+
+        return null;
+    }
 }
