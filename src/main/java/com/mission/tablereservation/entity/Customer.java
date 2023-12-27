@@ -26,12 +26,17 @@ public class Customer extends BaseEntity implements UserDetails {
     private Long id;
 
     private String name;
+
     private String password;
+
     private String phone;
+
     @Column(unique = true)
     private String email;
+
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
+
     private LocalDate birth;
 
     @Override
@@ -42,7 +47,7 @@ public class Customer extends BaseEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.name;
+        return this.email;
     }
 
     @Override

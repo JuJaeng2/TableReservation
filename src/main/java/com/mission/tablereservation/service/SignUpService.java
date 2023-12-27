@@ -54,9 +54,4 @@ public class SignUpService{
 
         return "파트너가입에 성공하셨습니다. 다시 로그인을 해주세요.";
     }
-
-    private boolean identityVerification(PartnerForm form) {
-
-        return false;
-    }
 }
