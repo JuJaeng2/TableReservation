@@ -21,7 +21,8 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @PostMapping("/reservation")
-    public ResponseEntity<ReservationResponse> storeReservation(@RequestBody ReservationForm reservationForm, Authentication authentication){
+    public ResponseEntity<ReservationResponse> storeReservation(@RequestBody ReservationForm reservationForm,
+                                                                Authentication authentication){
 
         ReservationResponse reservationResponse  = reservationService.reserveStore(reservationForm, authentication.getName());
 
@@ -41,7 +42,9 @@ public class CustomerController {
     -
      */
     @PostMapping("/review/{id}")
-    public ResponseEntity<String> writeReview(@PathVariable(name = "id") Long reservationId, @RequestBody ReviewForm reviewForm, Authentication authentication){
+    public ResponseEntity<String> writeReview(@PathVariable(name = "id") Long reservationId,
+                                              @RequestBody ReviewForm reviewForm,
+                                              Authentication authentication){
 
         String result = customerService.writeReview(reviewForm, authentication.getName(), reservationId);
 

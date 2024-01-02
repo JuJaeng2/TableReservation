@@ -10,15 +10,15 @@ Content-Type: application/json
 ### 매장 예약
 POST http://localhost:8080/customer/reservation
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwNzEwMSwiZXhwIjoxNzA0MjEwNzAxfQ.sHsxIHf89EAdVIoDrzu4luOScsHndQ1u_3oJVToHFi1PrEvtBVq0LMA8gsCbaH34VknpJcZeFHRhqsLMk6-yyg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIxMTcxOSwiZXhwIjoxNzA0MjE1MzE5fQ.6vzN1MeQy4SfOWt6Xorq3wZnA1Iwzk92jvmrVBSYK1r0xuOWly5PetsJkjvpAHtHcoeRWsIpxene55zcQtZkxA
 
 {
-  "storeName": "매장2",
-  "numOfPeople": 6
+  "storeName": "매장1",
+  "numOfPeople": 3
 }
 
-### 매장 검색
-GET http://localhost:8080/customer/search/store/매장이름
+### 특정 매장 검색
+GET http://localhost:8080/customer/search/store/매장2
 
 
 ##############
@@ -47,12 +47,14 @@ Content-Type: application/json
 ### 방문확인
 POST http://localhost:8080/kiosk/confirmation
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQyMDkyNjYsImV4cCI6MTcwNDIxMjg2Nn0.cwGL3hbTtaW9pIn4-FzGVXgBxXPQzdygNtAyO0WxUvAvDnUYO_cjJ4JCqZHEEwgq9DZYeuJPeVSaoygJ40qu3A
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIxMTcxOSwiZXhwIjoxNzA0MjE1MzE5fQ.6vzN1MeQy4SfOWt6Xorq3wZnA1Iwzk92jvmrVBSYK1r0xuOWly5PetsJkjvpAHtHcoeRWsIpxene55zcQtZkxA
+
+
 
 ### 리뷰작성
-POST http://localhost:8080/customer/review/14
+POST http://localhost:8080/customer/review/15
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwNzEwMSwiZXhwIjoxNzA0MjEwNzAxfQ.sHsxIHf89EAdVIoDrzu4luOScsHndQ1u_3oJVToHFi1PrEvtBVq0LMA8gsCbaH34VknpJcZeFHRhqsLMk6-yyg
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIxMTcxOSwiZXhwIjoxNzA0MjE1MzE5fQ.6vzN1MeQy4SfOWt6Xorq3wZnA1Iwzk92jvmrVBSYK1r0xuOWly5PetsJkjvpAHtHcoeRWsIpxene55zcQtZkxA
 
 {
   "title": "유저2의 리뷰2",
