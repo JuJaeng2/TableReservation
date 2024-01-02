@@ -21,7 +21,7 @@ public class PartnerController {
 
 
     @PutMapping("/register")
-    public ResponseEntity<StoreResponse> partnerStore(@RequestBody StoreForm form, Authentication authentication){
+    public ResponseEntity<StoreResponse> registerStore(@RequestBody StoreForm form, Authentication authentication){
 
         if (authentication == null){
             throw new CustomException(NEED_LOGIN);
@@ -33,4 +33,20 @@ public class PartnerController {
 
         return new ResponseEntity<>(storeResponse ,HttpStatus.OK);
     }
+
+    // 리뷰 삭제
+    @DeleteMapping("/review/{reviewId}")
+    public ResponseEntity<String> deleteReview(@PathVariable Long reviewId, Authentication authentication){
+
+        String email = authentication.getName();
+
+        String result = partnerService.deleteReview(reviewId, email);
+
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 자신의 매장과 관련된 예약 중에서 이미 방문확인 기간이 한참 초과된 예약을 지우는 기능을 통해 예약 리스트 정리하기
+     */
+
 }

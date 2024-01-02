@@ -50,6 +50,7 @@ public class Customer extends BaseEntity implements UserDetails {
         return this.email;
     }
 
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

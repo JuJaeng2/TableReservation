@@ -7,10 +7,7 @@ import com.mission.tablereservation.model.SignInForm;
 import com.mission.tablereservation.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +18,11 @@ public class SignInController {
 
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
+
+    @GetMapping("/main.do")
+    public String signInPage(){
+        return "/login";
+    }
 
     @PostMapping("/customer")
     public ResponseEntity<String> signIn(@RequestBody SignInForm signInForm){

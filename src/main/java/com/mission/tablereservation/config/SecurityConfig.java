@@ -25,9 +25,9 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorizeRequests ->
                 {
-                    authorizeRequests.requestMatchers("/signUp/**", "/signIn/**").permitAll();
-//                    authorizeRequests.requestMatchers("PARTNER", "/partner/**").permitAll();
+                    authorizeRequests.requestMatchers("/signUp/**", "/signIn/**", "/customer/search/**", "/test/**").permitAll();
                     authorizeRequests.requestMatchers("/partner/**").hasAuthority("PARTNER");
+                    authorizeRequests.requestMatchers("/customer/**", "/kiosk/**").hasAuthority("CUSTOMER");
                     authorizeRequests.anyRequest().authenticated();
                 })
                 .addFilterBefore(this.jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
