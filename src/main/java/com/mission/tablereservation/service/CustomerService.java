@@ -35,7 +35,11 @@ public class CustomerService {
 
         if (reviewRepository.countByReservation(reservation) > 0){
             throw new CustomException(ALREADY_EXIST_REVIEW);
-        };
+        }
+
+        if (!reservation.isVisit()){
+            throw new CustomException(NOT_CONFIRM_VISIT);
+        }
 
         if (reservation.getCustomer() != customer){
             throw new CustomException(NOT_SAME_WRITER);
@@ -72,6 +76,7 @@ public class CustomerService {
         return ReviewResponse.toResponse(updateReview);
 
     }
+
 
     private Review findReview(Long id, String email) {
         Review review = reviewRepository.findById(id)

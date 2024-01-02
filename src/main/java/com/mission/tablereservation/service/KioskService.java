@@ -20,8 +20,6 @@ public class KioskService {
     private final CustomerRepository customerRepository;
     private final ReservationRepository reservationRepository;
 
-    private final int CONFIRMATION_TERM = 10;
-
     /**
      * 방문확인 기간이 지난 예약건은 어떻게 처리할지 => 삭제처리 후 이미 지난 예약건이라는 메세지 반환
      * 해당 매장의 파트너가입 유저가 확인할 수 있도록 따로 테이블을 만들기
@@ -36,17 +34,9 @@ public class KioskService {
         Customer customer = customerRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_CUSTOMER));
 
-        List<Reservation> reservationList = reservationRepository.findByCustomerAndVisitIsFalseOrderByReservationDateAsc(customer);
+        Reservation reservation = findReservation(customer);
 
-        if (reservationList.isEmpty()){
-            throw new CustomException(NO_RESERVATION);
-        }
-
-        Reservation reservation = reservationList.get(0);
-        this.validateConfirmTime(reservation.getReservationDate());
-
-        if (this.validateConfirmTime(reservation.getReservationDate())){
-            this.deleteReservation(reservation);
+        if (isOverConfirmTime(reservation.getReservationDate())){
             throw new CustomException(EXCEED_CONFIRMATION_TIME);
         }
 
@@ -56,15 +46,23 @@ public class KioskService {
         return "방문확인 성공";
     }
 
-    private boolean validateConfirmTime(LocalDateTime reservationTime){
-        if (!LocalDateTime.now().isBefore(reservationTime.minusMinutes(CONFIRMATION_TERM))){
-            return false;
+    private Reservation findReservation(Customer customer){
+        List<Reservation> reservationList = reservationRepository.findByCustomerAndVisitIsFalseOrderByReservationDateAsc(customer);
+
+        if (reservationList.isEmpty()){
+            throw new CustomException(NO_RESERVATION);
         }
-        return true;
+
+        return reservationList.get(0);
     }
 
-    private void deleteReservation(Reservation reservation){
-        reservationRepository.delete(reservation);
-    }
+    private boolean isOverConfirmTime(LocalDateTime reservationTime){
 
+        if (LocalDateTime.now().isAfter(reservationTime.minusMinutes(10))){
+            System.out.println("방문확인 가능 기간을 초과했습니다.");
+            return true;
+        }
+        System.out.println("아직 방문확인 가능 한 기간입니다");
+        return false;
+    }
 }

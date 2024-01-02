@@ -41,7 +41,7 @@ public class Reservation {
                 .customer(customer)
                 .store(store)
                 .numOfPeople(reservationForm.getNumOfPeople())
-                .reservationDate(LocalDateTime.now())
+                .reservationDate(LocalDateTime.now().plusDays(3))
                 .visit(false)
                 .regDate(LocalDateTime.now())
                 .build();
