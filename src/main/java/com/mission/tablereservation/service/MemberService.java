@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mission.tablereservation.exception.ErrorCode.NOT_EXIST_EMAIL;
-import static com.mission.tablereservation.exception.ErrorCode.UNMATCH_PASSWORD;
+import static com.mission.tablereservation.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -48,5 +47,10 @@ public class MemberService implements UserDetailsService {
         }
 
         return roles;
+    }
+
+    public Customer findCustomerByEmail(String email){
+        return customerRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(NOT_FOUND_CUSTOMER));
     }
 }

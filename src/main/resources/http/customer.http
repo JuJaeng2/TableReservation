@@ -1,0 +1,74 @@
+### 로그인 (토큰발급)
+POST http://localhost:8080/signIn/customer
+Content-Type: application/json
+
+{
+  "password": "1234",
+  "email": "jjy108@naver.com"
+}
+
+### 매장 예약
+POST http://localhost:8080/customer/reservation
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwNzEwMSwiZXhwIjoxNzA0MjEwNzAxfQ.sHsxIHf89EAdVIoDrzu4luOScsHndQ1u_3oJVToHFi1PrEvtBVq0LMA8gsCbaH34VknpJcZeFHRhqsLMk6-yyg
+
+{
+  "storeName": "매장2",
+  "numOfPeople": 6
+}
+
+### 매장 검색
+GET http://localhost:8080/customer/search/store/매장이름
+
+
+##############
+### eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MUBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7ZmN6ri464-ZIiwiaWF0IjoxNzAzNzY4NzQ5LCJleHAiOjE3MDM3NzIzNDl9.c2LHAHTbKk8AicGmioyDm8cF8UQF0VB0bD2osBNp2AS8BUhn4HT06QGJBbJhhjh8QnvG2pF-FbYBmSRbUjAkpA
+### 회원가입
+POST http://localhost:8080/signUp/customer
+Content-Type: application/json
+
+{
+  "name": "홍길동",
+  "email": "test1@naver.com",
+  "password": "1234",
+  "birth": "1998-03-26",
+  "phone": "010-1111-2222"
+}
+
+### 로그인 토큰발급
+POST http://localhost:8080/signIn/customer
+Content-Type: application/json
+
+{
+  "password": "2222",
+  "email": "test2@naver.com"
+}
+
+### 방문확인
+POST http://localhost:8080/kiosk/confirmation
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQyMDkyNjYsImV4cCI6MTcwNDIxMjg2Nn0.cwGL3hbTtaW9pIn4-FzGVXgBxXPQzdygNtAyO0WxUvAvDnUYO_cjJ4JCqZHEEwgq9DZYeuJPeVSaoygJ40qu3A
+
+### 리뷰작성
+POST http://localhost:8080/customer/review/14
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwNzEwMSwiZXhwIjoxNzA0MjEwNzAxfQ.sHsxIHf89EAdVIoDrzu4luOScsHndQ1u_3oJVToHFi1PrEvtBVq0LMA8gsCbaH34VknpJcZeFHRhqsLMk6-yyg
+
+{
+  "title": "유저2의 리뷰2",
+  "contents": "유저2가 작성한 리뷰2입니다."
+}
+
+### 리뷰 삭제
+DELETE http://localhost:8080/customer/review/1
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwODA5MCwiZXhwIjoxNzA0MjExNjkwfQ.KX8AU9KzdQc4o9HoguZPI332UKYzOILQpYx51Mag4WSPdcXhQ0p2IHb2PX_mhPixlQUudcmHJU60FWkrgJwtPQ
+
+### 리뷰수정
+PUT http://localhost:8080/customer/review/3
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwODA5MCwiZXhwIjoxNzA0MjExNjkwfQ.KX8AU9KzdQc4o9HoguZPI332UKYzOILQpYx51Mag4WSPdcXhQ0p2IHb2PX_mhPixlQUudcmHJU60FWkrgJwtPQ
+
+{
+  "title": "수정된 제목1",
+  "contents": "수정된 리뷰글입니다."
+}
