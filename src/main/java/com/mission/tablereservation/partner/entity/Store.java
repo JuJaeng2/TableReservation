@@ -1,7 +1,7 @@
 package com.mission.tablereservation.partner.entity;
 
 import com.mission.tablereservation.entity.BaseEntity;
-import com.mission.tablereservation.entity.Customer;
+import com.mission.tablereservation.customer.entity.Customer;
 import com.mission.tablereservation.partner.model.StoreForm;
 import jakarta.persistence.*;
 import lombok.*;

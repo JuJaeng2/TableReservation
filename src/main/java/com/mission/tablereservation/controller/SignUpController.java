@@ -1,7 +1,7 @@
 package com.mission.tablereservation.controller;
 
-import com.mission.tablereservation.model.PartnerForm;
-import com.mission.tablereservation.model.SignUpForm;
+import com.mission.tablereservation.customer.model.PartnerForm;
+import com.mission.tablereservation.customer.model.SignUpForm;
 import com.mission.tablereservation.service.SignUpService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +21,13 @@ public class SignUpController {
     @PostMapping("/customer")
     public ResponseEntity<String> customerSignUp(@RequestBody SignUpForm form){
 
-        System.out.println(form.getName());
         String result = signUpService.signup(form);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/partner")
-    public ResponseEntity<?> registerPartner(@RequestBody PartnerForm form, Authentication authentication){
+    public ResponseEntity<String> registerPartner(@RequestBody PartnerForm form, Authentication authentication){
 
-        System.out.println("토큰에 들어있는 이름 : " + authentication.getName());
         String result = signUpService.registerPartner(form, authentication);
 
         return ResponseEntity.ok(result);

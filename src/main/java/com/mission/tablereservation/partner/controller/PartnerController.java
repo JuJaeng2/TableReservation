@@ -20,7 +20,10 @@ public class PartnerController {
 
     private final PartnerService partnerService;
 
-
+    /**
+     * 매장 등록
+     * - 파트너가입이 된 계정만 매장 등록 가능
+     */
     @PostMapping("/store")
     public ResponseEntity<StoreResponse> registerStore(@RequestBody StoreForm form, Authentication authentication){
 
@@ -29,14 +32,21 @@ public class PartnerController {
         }
 
         authentication.getAuthorities().forEach(authority -> System.out.println(authority.getAuthority().equals("CUSTOMER")));
-        // 매장 등록
+
         StoreResponse storeResponse = partnerService.registerStore(form, authentication);
 
-        return new ResponseEntity<>(storeResponse ,HttpStatus.OK);
+        return new ResponseEntity<>(storeResponse , HttpStatus.OK);
     }
 
+    /**
+     * 매장 삭제
+     * - 등록된 매장 삭제
+     */
     @DeleteMapping("/store/{storeId}")
     public ResponseEntity<?> deleteStore(@PathVariable(name = "storeId") Long id, Authentication authentication){
+
+        System.out.println("가게 아이디 : " + id);
+
         String email = authentication.getName();
 
         String result = partnerService.deleteStore(id, email);
@@ -44,6 +54,10 @@ public class PartnerController {
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 매장정보 수정
+     * - 매장 정보 수정
+     */
     @PutMapping("/store/{storeId}")
     public ResponseEntity<?> updateStore(@PathVariable(name = "storeId") Long id,
                                          @RequestBody StoreUpdateForm storeUpdateForm,
@@ -66,8 +80,6 @@ public class PartnerController {
         return ResponseEntity.ok(result);
     }
 
-    /**
-     * 자신의 매장과 관련된 예약 중에서 이미 방문확인 기간이 한참 초과된 예약을 지우는 기능을 통해 예약 리스트 정리하기
-     */
+
 
 }

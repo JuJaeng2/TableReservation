@@ -1,8 +1,8 @@
 package com.mission.tablereservation.config;
 
-import com.mission.tablereservation.model.CustomerDto;
-import com.mission.tablereservation.model.CustomerVo;
-import com.mission.tablereservation.service.MemberService;
+import com.mission.tablereservation.customer.model.CustomerDto;
+import com.mission.tablereservation.customer.model.TokenResponse;
+import com.mission.tablereservation.customer.service.MemberService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -27,7 +27,7 @@ public class JwtTokenProvider {
     private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // 1 시간을 의미
     private final MemberService memberService;
 
-    public String createToken(CustomerDto customer, List<UserType> roles){
+    public TokenResponse createToken(CustomerDto customer, List<UserType> roles){
 
         Claims claims = Jwts.claims().setSubject(customer.getEmail());
         claims.put("roles", roles);
@@ -36,17 +36,22 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + TOKEN_EXPIRE_TIME);
 
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setClaims(claims)
                 .setIssuedAt(now)
+                .setIssuer(customer.getEmail())
                 .setExpiration(expiredDate)
-                .signWith(SignatureAlgorithm.HS512, this.secretKey)
+                .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
+
+        return TokenResponse.builder()
+                .token(token)
+                .build();
 
     }
 
     public Authentication getAuthentication(String jwt){
-        UserDetails userDetails = this.memberService.loadUserByUsername(this.getUserEmail(jwt));
+        UserDetails userDetails = memberService.loadUserByUsername(getUserEmail(jwt));
         System.out.println("UserDetails => " + userDetails.getUsername());
         System.out.println(userDetails.getAuthorities());
 
@@ -54,7 +59,7 @@ public class JwtTokenProvider {
     }
 
     public String getUserEmail(String token){
-        return this.parseClaims(token).getSubject();
+        return parseClaims(token).getSubject();
     }
 
     public boolean validateToken(String token) {
@@ -62,22 +67,15 @@ public class JwtTokenProvider {
             return false;
         }
 
-        Claims claims = this.parseClaims(token);
+        Claims claims = parseClaims(token);
         return !claims.getExpiration().before(new Date());
     }
 
     private Claims parseClaims(String token){
         try{
-            return Jwts.parser().setSigningKey(this.secretKey).parseClaimsJws(token).getBody();
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
         }catch (ExpiredJwtException e){
             return e.getClaims();
         }
-    }
-
-    public CustomerVo getCustomerVO(String token) {
-        Claims claims = this.parseClaims(token);
-        System.out.println(claims.getId());
-
-        return null;
     }
 }

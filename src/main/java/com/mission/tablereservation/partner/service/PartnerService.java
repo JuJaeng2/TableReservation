@@ -1,6 +1,6 @@
 package com.mission.tablereservation.partner.service;
 
-import com.mission.tablereservation.entity.Customer;
+import com.mission.tablereservation.customer.entity.Customer;
 import com.mission.tablereservation.entity.Review;
 import com.mission.tablereservation.exception.CustomException;
 import com.mission.tablereservation.partner.entity.Store;
@@ -8,7 +8,8 @@ import com.mission.tablereservation.partner.model.StoreForm;
 import com.mission.tablereservation.partner.model.StoreResponse;
 import com.mission.tablereservation.partner.model.StoreUpdateForm;
 import com.mission.tablereservation.partner.repository.StoreRepository;
-import com.mission.tablereservation.repository.CustomerRepository;
+import com.mission.tablereservation.customer.repository.CustomerRepository;
+import com.mission.tablereservation.repository.ReservationRepository;
 import com.mission.tablereservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -24,6 +25,7 @@ public class PartnerService {
     private final StoreRepository storeRepository;
     private final CustomerRepository customerRepository;
     private final ReviewRepository reviewRepository;
+    private final ReservationRepository reservationRepository;
 
     @Transactional
     public StoreResponse registerStore(StoreForm storeForm, Authentication authentication){
@@ -43,7 +45,7 @@ public class PartnerService {
                 .orElseThrow(() -> new CustomException(NOT_FOUND_REVIEW));
 
         if (!review.getReservation().getStore().getCustomer().getEmail().equals(email)){
-            throw new CustomException(NOT_STORE_BOSS);
+            throw new CustomException(NOT_OWNER_OF_STORE);
         }
         reviewRepository.delete(review);
         return "매장 관리자 권한으로 리뷰를 삭제했습니다.";
@@ -51,10 +53,9 @@ public class PartnerService {
 
     public String deleteStore(Long id, String email) {
 
-        System.out.println("매장 ID : " + id);
-        System.out.println("요청자 이메일 : " + email);
-        Store store = findStore(id);
+        Store store = getStore(id);
 
+        checkReservation(email, store);
         checkEmail(email, store);
 
         storeRepository.delete(store);
@@ -64,7 +65,7 @@ public class PartnerService {
 
 
     public StoreResponse updateStoreInfo(Long id, String email, StoreUpdateForm storeUpdateForm) {
-        Store store = findStore(id);
+        Store store = getStore(id);
         checkEmail(email, store);
 
         updateName(store, storeUpdateForm.getName());
@@ -94,15 +95,20 @@ public class PartnerService {
         }
     }
 
-    private Store findStore(Long id) {
+    private Store getStore(Long id) {
         Store store = storeRepository.findById(id)
-                .orElseThrow(() -> new CustomException(NOT_EXIST_STORE));
+                .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));
         return store;
     }
 
-    private static void checkEmail(String email, Store store) {
+    private void checkEmail(String email, Store store) {
         if (!store.getCustomer().getEmail().equals(email)){
             throw  new CustomException(NOT_MATCH_EMAIL);
+        }
+    }
+    private void checkReservation(String email, Store store){
+        if (reservationRepository.countByStore(store) > 0){
+            throw new CustomException(DELETE_ASSOCIATED_RESERVATION);
         }
     }
 }

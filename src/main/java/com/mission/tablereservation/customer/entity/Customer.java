@@ -1,5 +1,6 @@
-package com.mission.tablereservation.entity;
+package com.mission.tablereservation.customer.entity;
 
+import com.mission.tablereservation.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.mission.tablereservation.model;
+package com.mission.tablereservation.customer.model;
 
 import com.mission.tablereservation.entity.Review;
 import lombok.AllArgsConstructor;
@@ -14,11 +14,17 @@ public class ReviewResponse {
 
     private String title;
     private String contents;
+    private String message;
 
-    public static ReviewResponse toResponse(Review review){
+    public static ReviewResponse toResponse(String message){
+        return toResponse(new Review(), message);
+    }
+
+    public static ReviewResponse toResponse(Review review, String message){
         return ReviewResponse.builder()
                 .title(review.getTitle())
                 .contents(review.getContents())
+                .message(message)
                 .build();
     }
 
