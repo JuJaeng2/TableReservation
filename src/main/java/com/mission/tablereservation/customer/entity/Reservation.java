@@ -1,6 +1,6 @@
-package com.mission.tablereservation.entity;
+package com.mission.tablereservation.customer.entity;
 
-import com.mission.tablereservation.model.ReservationForm;
+import com.mission.tablereservation.customer.model.ReservationForm;
 import com.mission.tablereservation.partner.entity.Store;
 import jakarta.persistence.*;
 import lombok.*;

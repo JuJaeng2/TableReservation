@@ -1,6 +1,6 @@
-package com.mission.tablereservation.model;
+package com.mission.tablereservation.customer.model;
 
-import com.mission.tablereservation.entity.Reservation;
+import com.mission.tablereservation.customer.entity.Reservation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

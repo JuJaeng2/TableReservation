@@ -1,8 +1,8 @@
-package com.mission.tablereservation.model;
+package com.mission.tablereservation.customer.model;
 
 
 import com.mission.tablereservation.config.UserType;
-import com.mission.tablereservation.entity.Customer;
+import com.mission.tablereservation.customer.entity.Customer;
 import lombok.*;
 
 import java.time.LocalDate;

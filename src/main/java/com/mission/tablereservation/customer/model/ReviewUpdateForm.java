@@ -1,4 +1,4 @@
-package com.mission.tablereservation.model;
+package com.mission.tablereservation.customer.model;
 
 import lombok.*;
 

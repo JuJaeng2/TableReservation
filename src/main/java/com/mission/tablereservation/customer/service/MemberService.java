@@ -1,10 +1,11 @@
-package com.mission.tablereservation.service;
+package com.mission.tablereservation.customer.service;
 
 import com.mission.tablereservation.config.UserType;
-import com.mission.tablereservation.entity.Customer;
+import com.mission.tablereservation.customer.entity.Customer;
+import com.mission.tablereservation.customer.model.SignInForm;
 import com.mission.tablereservation.exception.CustomException;
-import com.mission.tablereservation.model.CustomerDto;
-import com.mission.tablereservation.repository.CustomerRepository;
+import com.mission.tablereservation.customer.model.CustomerDto;
+import com.mission.tablereservation.customer.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,15 +26,23 @@ public class MemberService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email)  {
-        return this.customerRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(NOT_EXIST_EMAIL));
+        return getCustomerByEmail(email);
     }
 
     public CustomerDto authenticate(String email, String password){
-        Customer customer = this.customerRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(NOT_EXIST_EMAIL));
+        Customer customer = getCustomerByEmail(email);
 
-        if (!this.passwordEncoder.matches(password, customer.getPassword())){
+        if (!passwordEncoder.matches(password, customer.getPassword())){
+            throw new CustomException(UNMATCH_PASSWORD);
+        }
+
+        return CustomerDto.fromEntity(customer);
+    }
+
+    public CustomerDto authenticate(SignInForm signInForm){
+        Customer customer = getCustomerByEmail(signInForm.getEmail());
+
+        if (!passwordEncoder.matches(signInForm.getPassword(), customer.getPassword())){
             throw new CustomException(UNMATCH_PASSWORD);
         }
 
@@ -49,8 +58,10 @@ public class MemberService implements UserDetailsService {
         return roles;
     }
 
-    public Customer findCustomerByEmail(String email){
+
+
+    private Customer getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(NOT_FOUND_CUSTOMER));
+                .orElseThrow(() -> new CustomException(NOT_EXIST_EMAIL));
     }
 }

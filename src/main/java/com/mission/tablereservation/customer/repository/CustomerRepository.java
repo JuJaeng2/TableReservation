@@ -1,6 +1,6 @@
-package com.mission.tablereservation.repository;
+package com.mission.tablereservation.customer.repository;
 
-import com.mission.tablereservation.entity.Customer;
+import com.mission.tablereservation.customer.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
