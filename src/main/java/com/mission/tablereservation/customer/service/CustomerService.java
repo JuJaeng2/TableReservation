@@ -8,7 +8,7 @@ import com.mission.tablereservation.customer.model.ReviewUpdateForm;
 import com.mission.tablereservation.customer.repository.CustomerRepository;
 import com.mission.tablereservation.entity.Review;
 import com.mission.tablereservation.exception.CustomException;
-import com.mission.tablereservation.repository.ReservationRepository;
+import com.mission.tablereservation.customer.repository.ReservationRepository;
 import com.mission.tablereservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

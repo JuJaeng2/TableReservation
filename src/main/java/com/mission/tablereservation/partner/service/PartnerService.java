@@ -1,6 +1,9 @@
 package com.mission.tablereservation.partner.service;
 
 import com.mission.tablereservation.customer.entity.Customer;
+import com.mission.tablereservation.customer.entity.Reservation;
+import com.mission.tablereservation.customer.repository.CustomerRepository;
+import com.mission.tablereservation.customer.repository.ReservationRepository;
 import com.mission.tablereservation.entity.Review;
 import com.mission.tablereservation.exception.CustomException;
 import com.mission.tablereservation.partner.entity.Store;
@@ -8,14 +11,16 @@ import com.mission.tablereservation.partner.model.StoreForm;
 import com.mission.tablereservation.partner.model.StoreResponse;
 import com.mission.tablereservation.partner.model.StoreUpdateForm;
 import com.mission.tablereservation.partner.repository.StoreRepository;
-import com.mission.tablereservation.customer.repository.CustomerRepository;
-import com.mission.tablereservation.repository.ReservationRepository;
 import com.mission.tablereservation.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
+import static com.mission.tablereservation.customer.model.ReservationType.APPROVAL;
+import static com.mission.tablereservation.customer.model.ReservationType.REFUSED;
 import static com.mission.tablereservation.exception.ErrorCode.*;
 
 @Service
@@ -77,6 +82,47 @@ public class PartnerService {
         return StoreResponse.toResponse(store);
     }
 
+    public String approveReservation(Long id, String email) {
+
+        Reservation reservation = getReservation(id);
+
+        checkValidity(email, reservation);
+
+        reservation.setReservationType(APPROVAL);
+        reservationRepository.save(reservation);
+
+        return "예약승인을 완료했습니다.";
+
+    }
+
+    public String refuseReservation(Long id, String email) {
+
+        Reservation reservation = getReservation(id);
+
+        checkValidity(email, reservation);
+
+        reservation.setReservationType(REFUSED);
+        return "예약을 거절하였습니다.";
+    }
+
+    private static void checkValidity(String email, Reservation reservation) {
+        if (!reservation.getStore().getCustomer().getEmail().equals(email)){
+            throw new CustomException(NOT_OWNER_OF_STORE);
+        }
+
+        LocalDateTime curTime = LocalDateTime.now();
+
+        if (curTime.isAfter(reservation.getReservationDate())){
+            throw new CustomException(OVER_RESERVATION_DATE);
+        }
+    }
+
+    private Reservation getReservation(Long id) {
+        Reservation reservation = reservationRepository.findById(id)
+                .orElseThrow(() -> new CustomException(NO_RESERVATION));
+        return reservation;
+    }
+
     private void updateDescription(Store store, String newDescription) {
         if (newDescription != null && newDescription.equals(store.getDescription())){
             store.setDescription(newDescription);
@@ -111,4 +157,7 @@ public class PartnerService {
             throw new CustomException(DELETE_ASSOCIATED_RESERVATION);
         }
     }
+
+
+
 }

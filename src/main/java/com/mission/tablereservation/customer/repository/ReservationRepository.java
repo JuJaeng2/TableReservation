@@ -1,4 +1,4 @@
-package com.mission.tablereservation.repository;
+package com.mission.tablereservation.customer.repository;
 
 import com.mission.tablereservation.customer.entity.Customer;
 import com.mission.tablereservation.customer.entity.Reservation;
@@ -13,6 +13,9 @@ import java.util.Optional;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
+
+    List<Reservation> findAllByCustomerAndStore(Customer customer, Store store);
+
     int countByCustomerAndNumOfPeopleAndStore(Customer customer, int numOfPeople, Store store);
 
     int countByCustomerAndStoreAndRegDate(Customer customer,  Store store, LocalDateTime regDate);
@@ -22,4 +25,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     Optional<Reservation> findByCustomerAndStoreAndVisitIsTrue(Customer customer, Store store);
 
     long countByStore(Store store);
+
+    Optional<Reservation> findByCustomerAndStore(Customer customer, Store store);
 }

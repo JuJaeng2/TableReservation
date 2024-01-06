@@ -6,6 +6,7 @@ import com.mission.tablereservation.customer.service.ReservationService;
 import com.mission.tablereservation.partner.model.StoreResponse;
 import com.mission.tablereservation.service.StoreService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/customer")
+@Slf4j
 public class CustomerController {
 
     private final ReservationService reservationService;
@@ -28,6 +30,9 @@ public class CustomerController {
     @PostMapping("/reservation")
     public ResponseEntity<ReservationResponse> storeReservation(@RequestBody ReservationForm reservationForm,
                                                                 Authentication authentication) {
+
+        log.info("예약 희망 날짜 : " + reservationForm.getStoreName());
+        System.out.println(reservationForm.getReservationDate());
 
         ReservationResponse reservationResponse =
                 reservationService.reserveStore(reservationForm, authentication.getName());
