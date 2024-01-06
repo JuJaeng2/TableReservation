@@ -7,33 +7,30 @@ Content-Type: application/json
   "email": "jjy108@naver.com"
 }
 
+### 로그인 (토큰발급)
+POST http://localhost:8080/signIn/customer
+Content-Type: application/json
+
+{
+  "password": "3333",
+  "email": "test3@naver.com"
+}
+
 ### 매장 예약
 POST http://localhost:8080/customer/reservation
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIxMTcxOSwiZXhwIjoxNzA0MjE1MzE5fQ.6vzN1MeQy4SfOWt6Xorq3wZnA1Iwzk92jvmrVBSYK1r0xuOWly5PetsJkjvpAHtHcoeRWsIpxene55zcQtZkxA
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0M0BuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMyIsImlhdCI6MTcwNDU1NjMxNSwiaXNzIjoidGVzdDNAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NTU5OTE1fQ.CM8NQfR_jxs8Bc9PSfba1Db_eI1_FOMP7O_no0dhRxojHwCDApmxj_uHmfKPuJ2RHg-Hp6C4zwkDn2XS6BrcYQ
 
 {
   "storeName": "매장1",
-  "numOfPeople": 3
+  "numOfPeople": 3,
+  "reservationDate": "2024-01-10",
+  "time": "7:30"
 }
 
 ### 특정 매장 검색
 GET http://localhost:8080/customer/search/store/매장2
 
-
-##############
-### eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MUBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7ZmN6ri464-ZIiwiaWF0IjoxNzAzNzY4NzQ5LCJleHAiOjE3MDM3NzIzNDl9.c2LHAHTbKk8AicGmioyDm8cF8UQF0VB0bD2osBNp2AS8BUhn4HT06QGJBbJhhjh8QnvG2pF-FbYBmSRbUjAkpA
-### 회원가입
-POST http://localhost:8080/signUp/customer
-Content-Type: application/json
-
-{
-  "name": "홍길동",
-  "email": "test1@naver.com",
-  "password": "1234",
-  "birth": "1998-03-26",
-  "phone": "010-1111-2222"
-}
 
 ### 로그인 토큰발급
 POST http://localhost:8080/signIn/customer
@@ -45,16 +42,14 @@ Content-Type: application/json
 }
 
 ### 방문확인
-POST http://localhost:8080/kiosk/confirmation
+POST http://localhost:8080/kiosk/confirmation/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIxMTcxOSwiZXhwIjoxNzA0MjE1MzE5fQ.6vzN1MeQy4SfOWt6Xorq3wZnA1Iwzk92jvmrVBSYK1r0xuOWly5PetsJkjvpAHtHcoeRWsIpxene55zcQtZkxA
-
-
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0M0BuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMyIsImlhdCI6MTcwNDU1NjMxNSwiaXNzIjoidGVzdDNAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NTU5OTE1fQ.CM8NQfR_jxs8Bc9PSfba1Db_eI1_FOMP7O_no0dhRxojHwCDApmxj_uHmfKPuJ2RHg-Hp6C4zwkDn2XS6BrcYQ
 
 ### 리뷰작성
-POST http://localhost:8080/customer/review/15
+POST http://localhost:8080/customer/review/25
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDQ2NTQzNywiaXNzIjoidGVzdDJAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NDY5MDM3fQ.KQetDJsQgDI9UvNFUHj9hX4lsRtNr1uHWFn4bfh1RgxVEPgUUo3UVnUVnPIDgCgE-29fC0JHgTMkkIC_WGkUIQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0M0BuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMyIsImlhdCI6MTcwNDU1NjMxNSwiaXNzIjoidGVzdDNAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NTU5OTE1fQ.CM8NQfR_jxs8Bc9PSfba1Db_eI1_FOMP7O_no0dhRxojHwCDApmxj_uHmfKPuJ2RHg-Hp6C4zwkDn2XS6BrcYQ
 
 {
   "title": "유저2의 리뷰2",
@@ -62,13 +57,13 @@ Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb
 }
 
 ### 리뷰 삭제
-DELETE http://localhost:8080/customer/review/1
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwODA5MCwiZXhwIjoxNzA0MjExNjkwfQ.KX8AU9KzdQc4o9HoguZPI332UKYzOILQpYx51Mag4WSPdcXhQ0p2IHb2PX_mhPixlQUudcmHJU60FWkrgJwtPQ
+DELETE http://localhost:8080/customer/review/6
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0M0BuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMyIsImlhdCI6MTcwNDU1NjMxNSwiaXNzIjoidGVzdDNAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NTU5OTE1fQ.CM8NQfR_jxs8Bc9PSfba1Db_eI1_FOMP7O_no0dhRxojHwCDApmxj_uHmfKPuJ2RHg-Hp6C4zwkDn2XS6BrcYQ
 
 ### 리뷰수정
-PUT http://localhost:8080/customer/review/3
+PUT http://localhost:8080/customer/review/7
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDIwODA5MCwiZXhwIjoxNzA0MjExNjkwfQ.KX8AU9KzdQc4o9HoguZPI332UKYzOILQpYx51Mag4WSPdcXhQ0p2IHb2PX_mhPixlQUudcmHJU60FWkrgJwtPQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0M0BuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMyIsImlhdCI6MTcwNDU1NjMxNSwiaXNzIjoidGVzdDNAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NTU5OTE1fQ.CM8NQfR_jxs8Bc9PSfba1Db_eI1_FOMP7O_no0dhRxojHwCDApmxj_uHmfKPuJ2RHg-Hp6C4zwkDn2XS6BrcYQ
 
 {
   "title": "수정된 제목1",

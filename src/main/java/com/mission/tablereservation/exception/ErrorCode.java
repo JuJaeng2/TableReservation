@@ -32,7 +32,9 @@ public enum ErrorCode {
     ALREADY_EXIST_REVIEW(HttpStatus.BAD_REQUEST, "이미 리뷰가 존재합니다."),
     NOT_OWNER_OF_STORE(HttpStatus.BAD_REQUEST, "매장의 관리자만 리뷰를 삭제할 수 있습니다." ),
     NOT_CONFIRM_VISIT(HttpStatus.BAD_REQUEST, "아직 방문확인 처리가 되지 않아 리뷰를 작성할 수 없습니다. 방문확인을 먼저 해주세요."),
-    DELETE_ASSOCIATED_RESERVATION(HttpStatus.BAD_REQUEST, "삭제하려는 매장과 관련된 모든 예약을 삭제해 주세요");
+    DELETE_ASSOCIATED_RESERVATION(HttpStatus.BAD_REQUEST, "삭제하려는 매장과 관련된 모든 예약을 삭제해 주세요"),
+    OVER_RESERVATION_DATE(HttpStatus.BAD_REQUEST, "예약 기간이 지난 예약입니다. 기간이 지난 예약은 삭제해주세요."),
+    NOT_APPROVED_RESERVATION(HttpStatus.BAD_REQUEST, "승인되지 않은 예약입니다.");
 
     private final HttpStatus httpStatus;
     private final String detail;

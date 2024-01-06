@@ -25,9 +25,9 @@ public class PartnerController {
      * - 파트너가입이 된 계정만 매장 등록 가능
      */
     @PostMapping("/store")
-    public ResponseEntity<StoreResponse> registerStore(@RequestBody StoreForm form, Authentication authentication){
+    public ResponseEntity<StoreResponse> registerStore(@RequestBody StoreForm form, Authentication authentication) {
 
-        if (authentication == null){
+        if (authentication == null) {
             throw new CustomException(NEED_LOGIN);
         }
 
@@ -35,15 +35,17 @@ public class PartnerController {
 
         StoreResponse storeResponse = partnerService.registerStore(form, authentication);
 
-        return new ResponseEntity<>(storeResponse , HttpStatus.OK);
+        return new ResponseEntity<>(storeResponse, HttpStatus.OK);
     }
 
     /**
      * 매장 삭제
      * - 등록된 매장 삭제
+     * - 매장에대한 예약이 있는 경우 매장정보 삭제 불가능
+     * - 관련 예약을 모두 지워야 삭제 가능
      */
     @DeleteMapping("/store/{storeId}")
-    public ResponseEntity<?> deleteStore(@PathVariable(name = "storeId") Long id, Authentication authentication){
+    public ResponseEntity<?> deleteStore(@PathVariable(name = "storeId") Long id, Authentication authentication) {
 
         System.out.println("가게 아이디 : " + id);
 
@@ -61,7 +63,7 @@ public class PartnerController {
     @PutMapping("/store/{storeId}")
     public ResponseEntity<?> updateStore(@PathVariable(name = "storeId") Long id,
                                          @RequestBody StoreUpdateForm storeUpdateForm,
-                                         Authentication authentication){
+                                         Authentication authentication) {
         String email = authentication.getName();
 
         StoreResponse storeResponse = partnerService.updateStoreInfo(id, email, storeUpdateForm);
@@ -69,17 +71,41 @@ public class PartnerController {
         return ResponseEntity.ok(storeResponse);
     }
 
-    // 리뷰 삭제
+    /**
+     * 리뷰 삭제
+     * - 자신이 등록한 매장에대한 리뷰 삭제 기능
+     */
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<String> deleteReview(@PathVariable Long reviewId, Authentication authentication){
+    public ResponseEntity<String> deleteReview(@PathVariable(name = "reviewId") Long id, Authentication authentication) {
 
         String email = authentication.getName();
 
-        String result = partnerService.deleteReview(reviewId, email);
+        String result = partnerService.deleteReview(id, email);
 
         return ResponseEntity.ok(result);
     }
 
+    /**
+     * 예약 승인
+     */
+    @PutMapping("/reservation/approval/{reservationId}")
+    public ResponseEntity<?> approveReservation(@PathVariable(name = "reservationId") Long id, Authentication authentication){
+        String email = authentication.getName();
 
+        String result = partnerService.approveReservation(id, email);
 
+        return ResponseEntity.ok(result);
+    }
+
+    /**
+     * 예약 거절
+     */
+    @PutMapping("/reservation/refusion/{reservationId}")
+    public ResponseEntity<?> refuseReservation(@PathVariable(name = "reservationId") Long id, Authentication authentication) {
+        String email = authentication.getName();
+
+        String result = partnerService.refuseReservation(id, email);
+
+        return ResponseEntity.ok(result);
+    }
 }

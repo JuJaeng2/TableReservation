@@ -1,6 +1,7 @@
 package com.mission.tablereservation.customer.entity;
 
 import com.mission.tablereservation.customer.model.ReservationForm;
+import com.mission.tablereservation.customer.model.ReservationType;
 import com.mission.tablereservation.partner.entity.Store;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,7 +33,9 @@ public class Reservation {
     private LocalDateTime reservationDate;
 
     private boolean visit;
-//    private boolean approve;
+
+    @Enumerated(EnumType.STRING)
+    private ReservationType reservationType;
 
     private LocalDateTime regDate;
 
@@ -41,7 +44,7 @@ public class Reservation {
                 .customer(customer)
                 .store(store)
                 .numOfPeople(reservationForm.getNumOfPeople())
-                .reservationDate(LocalDateTime.now().plusDays(3))
+                .reservationType(ReservationType.WAIT)
                 .visit(false)
                 .regDate(LocalDateTime.now())
                 .build();
