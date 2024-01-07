@@ -27,4 +27,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     long countByStore(Store store);
 
     Optional<Reservation> findByCustomerAndStore(Customer customer, Store store);
+
+
+    void deleteAllByReservationDateBefore(LocalDateTime curTime);
+
 }

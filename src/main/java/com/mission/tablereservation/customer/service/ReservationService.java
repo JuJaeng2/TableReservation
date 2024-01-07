@@ -12,6 +12,7 @@ import com.mission.tablereservation.customer.repository.ReservationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -77,4 +78,10 @@ public class ReservationService {
         }
     }
 
+    @Transactional
+    public void deleteReservation() {
+
+        reservationRepository.deleteAllByReservationDateBefore(LocalDateTime.now());
+
+    }
 }
