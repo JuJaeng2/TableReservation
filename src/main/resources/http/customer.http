@@ -12,19 +12,19 @@ POST http://localhost:8080/signIn/customer
 Content-Type: application/json
 
 {
-  "password": "3333",
-  "email": "test3@naver.com"
+  "password": "2222",
+  "email": "test2@naver.com"
 }
 
 ### 매장 예약
 POST http://localhost:8080/customer/reservation
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0M0BuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMyIsImlhdCI6MTcwNDU1NjMxNSwiaXNzIjoidGVzdDNAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NTU5OTE1fQ.CM8NQfR_jxs8Bc9PSfba1Db_eI1_FOMP7O_no0dhRxojHwCDApmxj_uHmfKPuJ2RHg-Hp6C4zwkDn2XS6BrcYQ
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0MkBuYXZlci5jb20iLCJyb2xlcyI6WyJDVVNUT01FUiJdLCJuYW1lIjoi7Jyg7KCAMiIsImlhdCI6MTcwNDY0NTI0OCwiaXNzIjoidGVzdDJAbmF2ZXIuY29tIiwiZXhwIjoxNzA0NjQ4ODQ4fQ.ntosFXqk7R-4f6G9JAegCvnQhhpINQu8oBvq23Mr6dczDttMdbxtyys4hybRQbZTDq6Rn-D6grh2bPxq35imkA
 
 {
-  "storeName": "매장1",
+  "storeName": "매장2",
   "numOfPeople": 3,
-  "reservationDate": "2024-01-10",
+  "reservationDate": "2024-01-04",
   "time": "7:30"
 }
 
