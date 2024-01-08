@@ -1,5 +1,6 @@
 package com.mission.tablereservation.service;
 
+import com.mission.tablereservation.common.model.MessageResponse;
 import com.mission.tablereservation.customer.entity.Customer;
 import com.mission.tablereservation.customer.model.CustomerDto;
 import com.mission.tablereservation.customer.model.PartnerForm;
@@ -24,7 +25,10 @@ public class SignUpService {
     private final PasswordEncoder passwordEncoder;
     private final MemberService memberService;
 
-    public String signup(SignUpForm form) {
+    /**
+     * - 사용가능한 이메일인지 확인하고 패스워드를 암호화하여 유저 정보 저장 => 회원가입 완료
+     */
+    public MessageResponse signup(SignUpForm form) {
 
         if (isEmailExist(form.getEmail())) {
             throw new CustomException(ALREADY_REGISTERED_EMAIL);
@@ -35,27 +39,45 @@ public class SignUpService {
             form.setUserType(CUSTOMER);
 
             customerRepository.save(form.toEntity());
-            return "회원가입에 성공하셨습니다.";
+            return MessageResponse.builder()
+                    .message("회원가입에 성공하셨습니다.")
+                    .build();
         }
 
     }
 
-    private boolean isEmailExist(String email) {
-        return customerRepository.findByEmail(email).isPresent();
-    }
+    /**
+     * 파트너 등록
+     * - 파트너 등록을 신청한 유저의 토큰과 폼에 입력한 데이터가 일치하는지 확인하여 등록
+     */
+    public MessageResponse registerPartner(PartnerForm form, Authentication authentication) {
 
-    public String registerPartner(PartnerForm form, Authentication authentication) {
+        String email = authentication.getName();
 
-        CustomerDto customerDto = memberService.authenticate(form.getEmail(), form.getPassword());
+        CustomerDto customerDto = memberService.authenticate(email, form.getPassword());
+
         if (authentication.getAuthorities().size() > 1) {
             throw new CustomException(ALREADY_REGISTER_PARTNER);
         }
 
         Customer customer = customerRepository.findByEmail(customerDto.getEmail())
                 .orElseThrow(() -> new CustomException(NOT_EXIST_EMAIL));
+
+        // partner 권한 추가
         customer.getRoles().add(String.valueOf(PARTNER));
+
         customerRepository.save(customer);
 
-        return "파트너가입에 성공하셨습니다. 다시 로그인을 해주세요.";
+        return MessageResponse.builder()
+                .message("파트너가입에 성공하셨습니다. 다시 로그인을 해주세요.")
+                .build();
     }
+
+    /**
+     * 이메일 존재 유무 확인
+     */
+    private boolean isEmailExist(String email) {
+        return customerRepository.findByEmail(email).isPresent();
+    }
+
 }

@@ -24,10 +24,11 @@ public class JwtTokenProvider {
 
     @Value("${jwt.secret}")
     private String secretKey;
-    private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60; // 1 시간을 의미
+    private static final long TOKEN_EXPIRE_TIME = 1000 * 60 * 60;
+
     private final MemberService memberService;
 
-    public TokenResponse createToken(CustomerDto customer, List<UserType> roles){
+    public TokenResponse createToken(CustomerDto customer, List<UserType> roles) {
 
         Claims claims = Jwts.claims().setSubject(customer.getEmail());
         claims.put("roles", roles);
@@ -50,7 +51,7 @@ public class JwtTokenProvider {
 
     }
 
-    public Authentication getAuthentication(String jwt){
+    public Authentication getAuthentication(String jwt) {
         UserDetails userDetails = memberService.loadUserByUsername(getUserEmail(jwt));
         System.out.println("UserDetails => " + userDetails.getUsername());
         System.out.println(userDetails.getAuthorities());
@@ -58,12 +59,12 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    public String getUserEmail(String token){
+    public String getUserEmail(String token) {
         return parseClaims(token).getSubject();
     }
 
     public boolean validateToken(String token) {
-        if (!StringUtils.hasText(token)){
+        if (!StringUtils.hasText(token)) {
             return false;
         }
 
@@ -71,10 +72,10 @@ public class JwtTokenProvider {
         return !claims.getExpiration().before(new Date());
     }
 
-    private Claims parseClaims(String token){
-        try{
+    private Claims parseClaims(String token) {
+        try {
             return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-        }catch (ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
     }

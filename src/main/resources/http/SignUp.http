@@ -1,0 +1,59 @@
+### 회원가입1
+POST http://localhost:8080/signUp/customer
+Content-Type: application/json
+
+{
+  "name": "유저1",
+  "email": "test1@naver.com",
+  "password": "1111",
+  "birth": "2023-12-12",
+  "phone": "010-1111-1111"
+}
+
+### 회원가입2
+POST http://localhost:8080/signUp/customer
+Content-Type: application/json
+
+{
+  "name": "유저2",
+  "email": "test2@naver.com",
+  "password": "2222",
+  "birth": "2023-12-12",
+  "phone": "010-2222-2222"
+}
+
+### 회원가입3
+POST http://localhost:8080/signUp/customer
+Content-Type: application/json
+
+{
+  "name": "유저3",
+  "email": "test3@naver.com",
+  "password": "3333",
+  "birth": "2023-12-12",
+  "phone": "010-3333-3333"
+}
+
+### 회원가입4
+POST http://localhost:8080/signUp/customer
+Content-Type: application/json
+
+{
+  "name": "유저4",
+  "email": "test4@naver.com",
+  "password": "4444",
+  "birth": "2023-12-12",
+  "phone": "010-4444-4444"
+}
+
+### 회원가입5
+POST http://localhost:8080/signUp/customer
+Content-Type: application/json
+
+{
+  "name": "유저5",
+  "email": "test5@naver.com",
+  "password": "5555",
+  "birth": "2023-12-12",
+  "phone": "010-5555-5555"
+}

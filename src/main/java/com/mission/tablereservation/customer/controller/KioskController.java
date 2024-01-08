@@ -1,5 +1,6 @@
 package com.mission.tablereservation.customer.controller;
 
+import com.mission.tablereservation.common.model.ResponseResult;
 import com.mission.tablereservation.customer.model.KioskResponse;
 import com.mission.tablereservation.customer.service.KioskService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class KioskController {
 
         KioskResponse kioskResponse = kioskService.confirmVisit(id, email);
 
-        return ResponseEntity.ok(kioskResponse);
+        return ResponseResult.success(kioskResponse);
+//        return ResponseEntity.ok(kioskResponse);
     }
 }

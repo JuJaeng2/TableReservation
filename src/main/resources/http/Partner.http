@@ -1,0 +1,49 @@
+### 파트너가입
+POST http://localhost:8080/signUp/partner
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiXSwibmFtZSI6IuyjvOyerOyYgSIsImlhdCI6MTcwMzc3MDE4NCwiZXhwIjoxNzAzNzczNzg0fQ.0KA5bwpUiuT29doL7SVMTf6v1jClgcNDkmMLwP4lt4QJIh3Rw3jh7lYJh61R1rBOlhMsscrcn1lu41rVyEOjGw
+
+{
+  "name": "주재영",
+  "password": "1234",
+  "email": "jjy108@naver.com"
+}
+
+### 매장등록
+POST http://localhost:8080/partner/store
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQyMTQ4NjUsImV4cCI6MTcwNDIxODQ2NX0.uhlhHyYEGBMJzJ_uwiQkO1yRzIOMXx9p8orbVB1u1dtRBAH-Qr_mAb1XbYL5C43OmBc_RkDDvmpKUclWYY52GQ
+
+{
+  "description": "매장에대한 설명4입니다.",
+  "name": "매장4",
+  "location": "서울시 영등포구"
+}
+
+### 매장삭제
+DELETE http://localhost:8080/partner/store/3
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQ0NjQzNjQsImlzcyI6ImpqeTEwOEBuYXZlci5jb20iLCJleHAiOjE3MDQ0Njc5NjR9._JsYPR-2s0wT_YuEN75AqtS_47j2nfBvyLXy3JE8t4R5t6xlT3Hjn93HZjASVvpBT9k7tHYvEbGdEa6HglsjHw
+
+### 매장 정보 수정
+PUT http://localhost:8080/partner/store/2
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQ0NjQzNjQsImlzcyI6ImpqeTEwOEBuYXZlci5jb20iLCJleHAiOjE3MDQ0Njc5NjR9._JsYPR-2s0wT_YuEN75AqtS_47j2nfBvyLXy3JE8t4R5t6xlT3Hjn93HZjASVvpBT9k7tHYvEbGdEa6HglsjHw
+
+{
+  "name": "새로운 이름",
+  "description": "새로운 매장 설명입니다",
+  "location": ""
+}
+
+### 매장 관리자 리뷰 삭제
+DELETE http://localhost:8080/partner/review/7
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQ1NTY5ODksImlzcyI6ImpqeTEwOEBuYXZlci5jb20iLCJleHAiOjE3MDQ1NjA1ODl9.sPjj7mFlnLobCaR5aF3yjrD8T-_8RX9-1-7eOVICyisynvwZMlMztY3Da3CkKztJAn1zEWb12L8Dporl8lH0Lg
+
+### 예약 승인
+PUT http://localhost:8080/partner/reservation/approval/25
+Content-Type: application/x-www-form-urlencoded
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqankxMDhAbmF2ZXIuY29tIiwicm9sZXMiOlsiQ1VTVE9NRVIiLCJQQVJUTkVSIl0sIm5hbWUiOiLso7zsnqzsmIEiLCJpYXQiOjE3MDQ1NTY5ODksImlzcyI6ImpqeTEwOEBuYXZlci5jb20iLCJleHAiOjE3MDQ1NjA1ODl9.sPjj7mFlnLobCaR5aF3yjrD8T-_8RX9-1-7eOVICyisynvwZMlMztY3Da3CkKztJAn1zEWb12L8Dporl8lH0Lg
+
+### 예약 거절
+PUT http://localhost:8080/partner/reservation/refusion/14
+Content-Type: application/x-www-form-urlencoded

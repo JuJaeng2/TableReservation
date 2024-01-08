@@ -1,12 +1,13 @@
 package com.mission.tablereservation.partner.controller;
 
+import com.mission.tablereservation.common.model.ResponseResult;
 import com.mission.tablereservation.exception.CustomException;
+import com.mission.tablereservation.common.model.MessageResponse;
 import com.mission.tablereservation.partner.model.StoreForm;
 import com.mission.tablereservation.partner.model.StoreResponse;
 import com.mission.tablereservation.partner.model.StoreUpdateForm;
 import com.mission.tablereservation.partner.service.PartnerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -25,17 +26,15 @@ public class PartnerController {
      * - 파트너가입이 된 계정만 매장 등록 가능
      */
     @PostMapping("/store")
-    public ResponseEntity<StoreResponse> registerStore(@RequestBody StoreForm form, Authentication authentication) {
+    public ResponseEntity<?> registerStore(@RequestBody StoreForm form, Authentication authentication) {
 
         if (authentication == null) {
             throw new CustomException(NEED_LOGIN);
         }
 
-        authentication.getAuthorities().forEach(authority -> System.out.println(authority.getAuthority().equals("CUSTOMER")));
-
         StoreResponse storeResponse = partnerService.registerStore(form, authentication);
 
-        return new ResponseEntity<>(storeResponse, HttpStatus.OK);
+        return ResponseResult.success(storeResponse);
     }
 
     /**
@@ -51,9 +50,9 @@ public class PartnerController {
 
         String email = authentication.getName();
 
-        String result = partnerService.deleteStore(id, email);
+        MessageResponse response = partnerService.deleteStore(id, email);
 
-        return ResponseEntity.ok(result);
+        return ResponseResult.success(response);
     }
 
     /**
@@ -68,7 +67,7 @@ public class PartnerController {
 
         StoreResponse storeResponse = partnerService.updateStoreInfo(id, email, storeUpdateForm);
 
-        return ResponseEntity.ok(storeResponse);
+        return ResponseResult.success(storeResponse);
     }
 
     /**
@@ -76,13 +75,13 @@ public class PartnerController {
      * - 자신이 등록한 매장에대한 리뷰 삭제 기능
      */
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<String> deleteReview(@PathVariable(name = "reviewId") Long id, Authentication authentication) {
+    public ResponseEntity<?> deleteReview(@PathVariable(name = "reviewId") Long id, Authentication authentication) {
 
         String email = authentication.getName();
 
-        String result = partnerService.deleteReview(id, email);
+        MessageResponse response = partnerService.deleteReview(id, email);
 
-        return ResponseEntity.ok(result);
+        return ResponseResult.success(response);
     }
 
     /**
@@ -92,9 +91,9 @@ public class PartnerController {
     public ResponseEntity<?> approveReservation(@PathVariable(name = "reservationId") Long id, Authentication authentication){
         String email = authentication.getName();
 
-        String result = partnerService.approveReservation(id, email);
+        MessageResponse response = partnerService.approveReservation(id, email);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(response);
     }
 
     /**
@@ -104,8 +103,8 @@ public class PartnerController {
     public ResponseEntity<?> refuseReservation(@PathVariable(name = "reservationId") Long id, Authentication authentication) {
         String email = authentication.getName();
 
-        String result = partnerService.refuseReservation(id, email);
+        MessageResponse response = partnerService.refuseReservation(id, email);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(response);
     }
 }
