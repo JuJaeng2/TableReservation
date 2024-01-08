@@ -15,6 +15,9 @@ public class StoreService {
 
     public final StoreRepository storeRepository;
 
+    /**
+     * 특정 이름을 가진 매장이 존재하는지 확인
+     */
     public StoreResponse getStoreInfo(String storeName){
         Store store = storeRepository.findByName(storeName)
                 .orElseThrow(() -> new CustomException(NOT_FOUND_STORE));

@@ -25,21 +25,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        System.out.println("JwtAuthenticationFilter 필터 들어옴");
 
-        String token = this.resolveTokenFromRequest(request);
+        String token = getTokenFromRequest(request);
 
-        if (token != null && this.jwtTokenProvider.validateToken(token)){
-            Authentication authentication = this.jwtTokenProvider.getAuthentication(token);
+        if (token != null && jwtTokenProvider.validateToken(token)){
+            Authentication authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        System.out.println("JwtAuthenticationFilter 필터 통과");
         filterChain.doFilter(request, response);
     }
 
 
-    private String resolveTokenFromRequest(HttpServletRequest request){
+    private String getTokenFromRequest(HttpServletRequest request){
         String token = request.getHeader(TOKEN_HEADER);
 
         if (!ObjectUtils.isEmpty(token) && token.startsWith(TOKEN_PREFIX)){
@@ -48,6 +46,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return null;
     }
+
+
 
 
 }

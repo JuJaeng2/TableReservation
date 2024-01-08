@@ -1,5 +1,6 @@
 package com.mission.tablereservation.controller;
 
+import com.mission.tablereservation.common.model.ResponseResult;
 import com.mission.tablereservation.config.JwtTokenProvider;
 import com.mission.tablereservation.config.UserType;
 import com.mission.tablereservation.customer.model.CustomerDto;
@@ -20,14 +21,19 @@ public class SignInController {
     private final MemberService memberService;
     private final JwtTokenProvider jwtTokenProvider;
 
+    /**
+     * customer 로그인
+     * - 이메일과 패스워드를 통해 로그인
+     * - 이메일과 패스워드가 적합하다면 토큰을 반환
+     */
     @PostMapping("/customer")
-    public ResponseEntity<TokenResponse> signIn(@RequestBody SignInForm signInForm){
+    public ResponseEntity<?> signIn(@RequestBody SignInForm signInForm){
 
         CustomerDto customerDto = memberService.authenticate(signInForm.getEmail(), signInForm.getPassword());
         List<UserType> roles = memberService.countAuthorities(customerDto);
 
         TokenResponse tokenResponse = jwtTokenProvider.createToken(customerDto, roles);
 
-        return ResponseEntity.ok(tokenResponse);
+        return ResponseResult.success(tokenResponse.getToken());
     }
 }

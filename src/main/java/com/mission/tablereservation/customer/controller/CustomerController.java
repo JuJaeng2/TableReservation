@@ -1,5 +1,6 @@
 package com.mission.tablereservation.customer.controller;
 
+import com.mission.tablereservation.common.model.ResponseResult;
 import com.mission.tablereservation.customer.model.*;
 import com.mission.tablereservation.customer.service.CustomerService;
 import com.mission.tablereservation.customer.service.ReservationService;
@@ -7,7 +8,6 @@ import com.mission.tablereservation.partner.model.StoreResponse;
 import com.mission.tablereservation.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ public class CustomerController {
      * - 한 사람이 같은 날 동일한 매장 예약 불가능
      */
     @PostMapping("/reservation")
-    public ResponseEntity<ReservationResponse> storeReservation(@RequestBody ReservationForm reservationForm,
+    public ResponseEntity<?> storeReservation(@RequestBody ReservationForm reservationForm,
                                                                 Authentication authentication) {
 
         log.info("예약 희망 날짜 : " + reservationForm.getStoreName());
@@ -37,7 +37,7 @@ public class CustomerController {
         ReservationResponse reservationResponse =
                 reservationService.reserveStore(reservationForm, authentication.getName());
 
-        return new ResponseEntity<>(reservationResponse, HttpStatus.OK);
+        return ResponseResult.success(reservationResponse);
     }
 
     /**
@@ -46,9 +46,9 @@ public class CustomerController {
      * - 해당 매장 정보 제공
      */
     @GetMapping("/search/store/{storeName}")
-    public ResponseEntity<StoreResponse> searchStore(@PathVariable(name = "storeName") String name) {
+    public ResponseEntity<?> searchStore(@PathVariable(name = "storeName") String name) {
         StoreResponse storeResponse = storeService.getStoreInfo(name);
-        return ResponseEntity.ok(storeResponse);
+        return ResponseResult.success(storeResponse);
     }
 
     /**
@@ -57,36 +57,38 @@ public class CustomerController {
      * - 이미 작성한 리뷰가 있으면 작성 불가능
      */
     @PostMapping("/review/{reservationId}")
-    public ResponseEntity<ReviewResponse> writeReview(@PathVariable(name = "reservationId") Long id,
+    public ResponseEntity<?> writeReview(@PathVariable(name = "reservationId") Long id,
                                               @RequestBody ReviewForm reviewForm,
                                               Authentication authentication) {
         String email = authentication.getName();
 
         ReviewResponse reviewResponse = customerService.writeReview(reviewForm, email, id);
 
-        return ResponseEntity.ok(reviewResponse);
+        return ResponseResult.success(reviewResponse);
     }
+
     /**
      * 리뷰 삭제
      * - 삭제하고자 하는 리뷰 아이디를 통해 리뷰 삭제
      * - 리뷰 삭제는 작성자, 매장 관리자만 삭제 가능
      */
     @DeleteMapping("/review/{reviewId}")
-    public ResponseEntity<ReviewResponse> deleteReview(@PathVariable(name = "reviewId") Long id, Authentication authentication) {
+    public ResponseEntity<?> deleteReview(@PathVariable(name = "reviewId") Long id, Authentication authentication) {
 
         String email = authentication.getName();
 
         ReviewResponse reviewResponse = customerService.deleteReview(id, email);
 
-        return ResponseEntity.ok(reviewResponse);
+        return ResponseResult.success(reviewResponse);
     }
+
     /**
      * 리뷰 수정
      * - 자신이 작성한 리뷰 수정
      * - 리뷰 작성자만 수정 가능
      */
     @PutMapping("/review/{reviewId}")
-    public ResponseEntity<ReviewResponse> updateReview(@PathVariable(name = "reviewId") Long id,
+    public ResponseEntity<?> updateReview(@PathVariable(name = "reviewId") Long id,
                                                        Authentication authentication,
                                                        @RequestBody ReviewUpdateForm reviewUpdateForm) {
 
@@ -94,6 +96,6 @@ public class CustomerController {
 
         ReviewResponse reviewResponse = customerService.updateReview(id, email, reviewUpdateForm);
 
-        return ResponseEntity.ok(reviewResponse);
+        return ResponseResult.success(reviewResponse);
     }
 }

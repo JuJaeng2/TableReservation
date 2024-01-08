@@ -20,6 +20,7 @@ public enum ErrorCode {
     ACCESS_DENIED(HttpStatus.BAD_REQUEST, "접근이 제한되었습니다."),
 
     NOT_FOUND_STORE(HttpStatus.BAD_REQUEST, "존재하지 않는 매장입니다."),
+    ALREADY_EXIST_STORE(HttpStatus.BAD_REQUEST, "이미 동일한 이름의 매장이 존재합니다."),
 
     ALREADY_EXIST_RESERVATION(HttpStatus.BAD_REQUEST, "동일한 예약이 이미 존재합니다."),
     NO_RESERVATION(HttpStatus.BAD_REQUEST, "예약정보가 없습니다."),
